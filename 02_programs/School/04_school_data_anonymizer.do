@@ -347,6 +347,32 @@ foreach var of local drop{
 }
 
 
+
+do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
+
+
+label var district_code "Masked district code"
+label var school_code_maskd"Masked school code"
+
+order school_code_maskd district_code school_province_preload total_enrolled_c numEligible4th grade5_yesno  m1* m4* subject_test s1* s2*  m5* m6* m7* m8*
+
+
+*--- dropping vars with all missing (no obs)
+
+foreach var of varlist * {
+    capture assert missing(`var')
+    if !_rc codebook `var', compact
+}
+
+
+foreach var of varlist * {
+    capture assert missing(`var')
+    if !_rc drop `var'
+}
+
+
 *------------------------------------------------------------------------------*
 *Saving anonymized school dataset:
 *-------------------------------------
@@ -453,7 +479,12 @@ foreach var of local drop{
 
 *--- School enrollement (dropping it since already addressed in the school file)
 
-cap drop total_enrolled
+loc drop total_enrolled
+foreach var of local drop{
+      capture drop `var'
+      di in r "return code for: `var': " _rc
+}
+
 
 *------------------------------------------------------------------------------*
 *Addressing teachers:
