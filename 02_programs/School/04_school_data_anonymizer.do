@@ -26,8 +26,15 @@ gl save_dir "${processed_dir}//School//Anonymized//"
 ********************************************************************************
 * ************* 1- School data *********
 ********************************************************************************
-
 use "${wrk_dir}/school_Stata.dta" 
+
+log using "${save_dir}\sensetive_masked\dropped_vars_log",  name("dropped_vars") replace
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+log off dropped_vars
 
 *Checking IDs:
 tab school_code, m				//Typically all schools should have an ID
@@ -60,12 +67,13 @@ restore
 }								
 
 
+log on dropped_vars
 loc drop ref_id school_district_preload hashed_school_district _merge tag_dup_final flag_m5_dup_teach_id
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
-
+log off dropped_vars
 
 order school_code school_code_preload school_name_preload district_code school_province_preload						
 								//droping the district identifing variable
@@ -97,6 +105,7 @@ save "${save_dir}\sensetive_masked\strata_info.dta", replace
 
 restore																							
 }								
+
 
 
 loc drop ref_id strata _merge
@@ -132,13 +141,13 @@ save "${save_dir}\sensetive_masked\school_info.dta", replace
 restore																							
 }								
 
-
+log on dropped_vars
 loc drop ref_id school_name_preload school_code school_code_preload hashed_school_code _merge
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
-
+log off dropped_vars
 
 order school_code_maskd
 
@@ -161,19 +170,21 @@ save "${save_dir}\sensetive_masked\schoolgeo_info.dta", replace
 restore																							
 }	
 
-
+log on dropped_vars
 loc drop m1s0q9__Latitude m1s0q9__Longitude m1s0q9__Accuracy m1s0q9__Altitude m1s0q9_Altitude  m1s0q9__Timestamp m1s0q9_Timestamp m1s0q9_Longitude m1s0q9_Latitude m1s0q9_Accuracy
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
-
+log off dropped_vars
 
 
 *--- School land line number and principal mobile number
 br m1saq2 m1saq2b
 
+log on dropped_vars
 drop m1saq2 m1saq2b
+log off dropped_vars
 
 *--- School enrollement 
 
@@ -192,12 +203,13 @@ recode m1saq7 (0/100=1 "100 or less") (101/200=2 "101-200 inclu") ///
 	tab total_enrolled_c
 	label var total_enrolled_c "total enrolled at school"
 
+log on dropped_vars
 loc drop total_enrolled m1saq7 m1saq8
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
-
+log off dropped_vars
 
 *--- Total number of 5th grade enrollments 
 sum m1saq8a_etri, d				//we will use the percentiles' values to recode the groups		
@@ -217,7 +229,9 @@ recode m1saq8a_etri (0/15=1 "15 and less") ///
 	tab m1saq8a_etri_c, m
 	label var m1saq8a_etri_c "total 5th grade enrolled at school"
 
+log on dropped_vars
 drop m1saq8a_etri
+log off dropped_vars
 
 *------------------------------------------------------------------------------*
 *Addressing school principals:
@@ -225,8 +239,9 @@ drop m1saq8a_etri
 *--- name of principals and other var names (to be dropped)
 br  m1saq1_first m1saq1_last m1s0q2_name m1s0q1_name m1s0q1_name_other name1 name2 name3 name4 name5 m6_teacher_name m8_teacher_name
 
+log on dropped_vars
 drop  m1saq1_first m1saq1_last m1s0q2_name m1s0q1_name m1s0q1_name_other name1 name2 name3 name4 name5 m6_teacher_name m8_teacher_name
-
+log off dropped_vars
 *--- Position in school (recoding low frequency obs if needed)
 tab m7saq1
 tab m1saq3
@@ -234,11 +249,15 @@ tab m1saq3
 *tab m7saq1, nolabel
 *	replace m7saq1 =97 if m7saq1== 6 
 
+log on dropped_vars
 drop m1saq3
+log off dropped_vars
 
 *--- Position in school_other (drop var)
 tab m7saq1_other
+log on dropped_vars
 drop m7saq1_other
+log off dropped_vars
 
 *--- Year started position teaching (turn dates into years, then interval recoding)
 tab m7saq8
@@ -258,7 +277,9 @@ recode m7saq8_y (5/max=5 "5 years or more")(.=.), gen (m7saq8_c)
 
 		tab m7saq8_c, m
 
+log on dropped_vars
 drop m7saq8_y m7saq8
+log off dropped_vars
 
 *--- Age (Two steps control)-- this shall be investigated on a case by case basis (depending on each dataset)
 tab m7saq9, m
@@ -280,16 +301,21 @@ recode m7saq9 (0/45=45 " 45 years old and less")(60/max=60 "more than 59 years")
 
 	label var m7saq9_c "What is your age?"
 	
-
+log on dropped_vars
 drop m7saq9
-							
+log off	dropped_vars
+					
 *--- Education_other (drop var)
 tab m7saq7_other
+log on dropped_vars
 drop m7saq7_other
+log off dropped_vars
 
 *--- gender (drop var)
 tab m7saq10
+log on dropped_vars
 drop m7saq10
+log off dropped_vars
 
 *--- Salary variable (top/bottom recoding)
 tab m7shq2_satt
@@ -304,7 +330,7 @@ recode m7shq2_satt (0/92000=92000 "90000 and less") (205000/max=205000 "205000 a
 	
 	label var m7shq2_satt_c "What is your net monthly salary as a public-school principal?"
 	
-
+log on dropped_vars
 drop m7shq2_satt
 
 *------------------------------------------------------------------------------*
@@ -346,7 +372,7 @@ foreach var of local drop{
       di in r "return code for: `var': " _rc
 }
 
-
+log off dropped_vars
 
 do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
@@ -358,7 +384,7 @@ label var school_code_maskd"Masked school code"
 
 order school_code_maskd district_code school_province_preload total_enrolled_c numEligible4th grade5_yesno  m1* m4* subject_test s1* s2*  m5* m6* m7* m8*
 
-
+log on dropped_vars
 *--- dropping vars with all missing (no obs)
 
 foreach var of varlist * {
@@ -371,8 +397,8 @@ foreach var of varlist * {
     capture assert missing(`var')
     if !_rc drop `var'
 }
-
-
+log off dropped_vars 
+log close dropped_vars
 *------------------------------------------------------------------------------*
 *Saving anonymized school dataset:
 *-------------------------------------
@@ -384,8 +410,16 @@ save "${save_dir}\school.dta", replace
 ********************************************************************************
 * ************* 2- Teachers data *********
 ********************************************************************************	
-
 use "${wrk_dir}/teachers_Stata.dta" 
+
+log using "${save_dir}\sensetive_masked\dropped_vars_log",  name("dropped_vars") replace
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+log off dropped_vars
+
 
 
 *Checking IDs:
