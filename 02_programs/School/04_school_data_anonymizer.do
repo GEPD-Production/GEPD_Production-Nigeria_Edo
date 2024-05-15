@@ -603,9 +603,9 @@ recode m3saq5_y (0/10=10 "0-10 years")(31/max=31 "more than 30 years")(.=.), gen
 
 		tab m3saq5_c
 
-log on 
+log on dropped_vars 
 drop m3saq5_y m3saq5
-log off
+log off dropped_vars 
 
 *------------------------------------------------------------------------------*
 *--- dropping unnecessary vars
@@ -626,9 +626,19 @@ foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
+log off dropped_vars
+
+do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
+order district_code school_code_maskd	teachers_id
 
+label var district_code "Masked district code"
+label var school_code_maskd"Masked school code"
+
+log on dropped_vars
 *--- dropping vars with all missing (no obs)
 
 foreach var of varlist * {
@@ -641,8 +651,8 @@ foreach var of varlist * {
     capture assert missing(`var')
     if !_rc drop `var'
 }
-
-
+log off dropped_vars
+log close dropped_vars
 
 *------------------------------------------------------------------------------*
 *Saving anonymized teacher dataset:
@@ -660,6 +670,15 @@ save "${save_dir}\teachers.dta", replace
 *For first grade students
 *------------------------------------------------------------------------------*
 use "${wrk_dir}/first_grade_Stata.dta" 
+
+log using "${save_dir}\sensetive_masked\dropped_vars_log",  name("dropped_vars") append
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+log off dropped_vars
+
 
 
 *Checking IDs:
@@ -712,7 +731,7 @@ joinby school_district_preload using "${save_dir}\sensetive_masked\district_info
 								
 tab _merge
 								//Checking the quality of the merge -- clean and error free merge							
-
+log on dropped_vars
 local drop school_district_preload _merge 
 foreach var of local drop{
       capture drop `var'
@@ -726,8 +745,32 @@ foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
+log off dropped_vars
+
+do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
+
 
 order school_code_maskd
+
+
+log on dropped_vars
+*--- dropping vars with all missing (no obs)
+
+foreach var of varlist * {
+    capture assert missing(`var')
+    if !_rc codebook `var', compact
+}
+
+
+foreach var of varlist * {
+    capture assert missing(`var')
+    if !_rc drop `var'
+}
+log off dropped_vars
+log close dropped_vars
+
 
 * Saving anonymized g1 dataset 
 save "${save_dir}\first_grade_assessment.dta", replace
@@ -739,6 +782,13 @@ save "${save_dir}\first_grade_assessment.dta", replace
 *------------------------------------------------------------------------------*
 use "${wrk_dir}/fourth_grade_Stata.dta" 
 
+log using "${save_dir}\sensetive_masked\dropped_vars_log",  name("dropped_vars") append
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+log off dropped_vars
 
 
 *Checking IDs:
@@ -791,7 +841,7 @@ joinby school_district_preload using "${save_dir}\sensetive_masked\district_info
 								
 tab _merge
 								//Checking the quality of the merge -- clean and error free merge							
-
+log on dropped_vars
 local drop school_district_preload _merge 
 foreach var of local drop{
       capture drop `var'
@@ -805,8 +855,36 @@ foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
+log  off dropped_vars
+
 
 order school_code_maskd
+
+
+do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
+do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
+
+
+order school_code_maskd
+
+
+log on dropped_vars
+*--- dropping vars with all missing (no obs)
+
+foreach var of varlist * {
+    capture assert missing(`var')
+    if !_rc codebook `var', compact
+}
+
+
+foreach var of varlist * {
+    capture assert missing(`var')
+    if !_rc drop `var'
+}
+log off dropped_vars
+log close dropped_vars
+
 
 * Saving anonymized g4 dataset 
 save "${save_dir}\fourth_grade_assessment.dta", replace
