@@ -413,14 +413,12 @@ clear
 *-------------------------------------
 log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") replace
 
+use "${wrk_dir}/school_Stata.dta" 
+
 di c(filename)
 di c(current_time)
 di c(current_date)
 
-log off QA_anonymization
-
-log on QA_anonymization
-use "${wrk_dir}/school_Stata.dta" 
 *------------------------------------------------------------------------------*
 * Quality control the anonymized dataset by comparing it to confidential set 
 *  [Note: if the follwoing code returns no error -- then the two datsets are identical]
@@ -440,6 +438,7 @@ use "${wrk_dir}/school_Stata.dta"
 cf _all using "${save_dir}\school.dta", all verbose
 
 log off QA_anonymization
+log close QA_anonymization
 	clear
 
 	
