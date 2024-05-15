@@ -399,13 +399,50 @@ foreach var of varlist * {
 }
 log off dropped_vars 
 log close dropped_vars
+
+
 *------------------------------------------------------------------------------*
 *Saving anonymized school dataset:
 *-------------------------------------
 save "${save_dir}\school.dta", replace
 
+clear
+
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential school datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") replace
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+log off QA_anonymization
+
+log on QA_anonymization
+use "${wrk_dir}/school_Stata.dta" 
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  [Note: if the follwoing code returns no error -- then the two datsets are identical]
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+*/
+*-------------------------------------
+
+cf _all using "${save_dir}\school.dta", all verbose
+
+log off QA_anonymization
 	clear
 
+	
 	
 ********************************************************************************
 * ************* 2- Teachers data *********
