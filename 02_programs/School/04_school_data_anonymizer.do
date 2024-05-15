@@ -412,7 +412,7 @@ save "${save_dir}\school.dta", replace
 ********************************************************************************	
 use "${wrk_dir}/teachers_Stata.dta" 
 
-log using "${save_dir}\sensetive_masked\dropped_vars_log",  name("dropped_vars") replace
+log using "${save_dir}\sensetive_masked\dropped_vars_log",  name("dropped_vars") append
 
 di c(filename)
 di c(current_time)
@@ -488,12 +488,13 @@ joinby school_code using "${save_dir}\sensetive_masked\school_info.dta", unmatch
 tab _merge
 								//Checking the quality of the merge -- clean and error free merge							
 
-
+log on dropped_vars 
 local drop school_code school_code_preload hashed_school_code _merge school_name_preload
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
+log off dropped_vars 
 
 local order hashed_school_province district_code school_code_maskd
 foreach var of local order{
@@ -503,32 +504,34 @@ foreach var of local order{
 
 
 *--- School geospatial data
-
+log on dropped_vars 
 loc drop m1s0q9__Latitude m1s0q9__Longitude m1s0q9__Accuracy m1s0q9__Altitude m1s0q9_Altitude  m1s0q9__Timestamp m1s0q9_Timestamp m1s0q9_Longitude m1s0q9_Latitude m1s0q9_Accuracy lat lon latitude longitude
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
-
+log off dropped_vars 
 
 *--- School enrollement (dropping it since already addressed in the school file)
-
+log on dropped_vars 
 loc drop total_enrolled
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
-
+log off dropped_vars 
 
 *------------------------------------------------------------------------------*
 *Addressing teachers:
 *--------------------------------------------
 *--- Teacher name (to be dropped)
+log on dropped_vars 
 local drop m2saq2 teacher_name_x m4saq1 teacher_name_y m5sb_troster teacher_name m3sb_troster  
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
 }
+log off dropped_vars 
 
 *--- Position in school (recoding low frequency obs if needed)
 tab m2saq4
@@ -536,10 +539,13 @@ tab m2saq4
 *replace m2saq4 =97 if m2saq4== 6 
 
 *--- Position in school_other (drop var)
+log on dropped_vars 
 drop m2saq4_other
-
+log off dropped_vars 
 *--- Contract status_other (drop var)
+log on dropped_vars 
 drop m2saq5_other
+log off dropped_vars 
 
 *--- Age (Two steps control)-- this shall be investigated on a case by case basis (depending on each dataset)
 tab m3saq6, m			
@@ -557,12 +563,16 @@ recode m3saq6 (0/31=31 " 31 years old and less")(61/max=61 "more than 60 years")
 	tab m3saq6_c
 
 	label var m3saq6_c "What is your age?"
-	
+
+log on dropped_vars 
 drop m3saq6
+log off dropped_vars 
 
 *--- Education_other (drop var)
 tab m3saq4_other
+log on dropped_vars 
 drop m3saq4_other
+log off dropped_vars 
 
 *--- Salary delay (recoding)
 tab m3seq7_tatt
@@ -571,7 +581,10 @@ sum m3seq7_tatt, d
 recode m3seq7_tatt (4/max=4 "more than 3 months")(.=.), gen (m3seq7_tatt_c)
 label var m3seq7_tatt_c "How many months was your salary delayed in the last academic year"
 	tab m3seq7_tatt_c
+
+log on dropped_vars 
 drop m3seq7_tatt
+log off dropped_vars 
 
 *--- Year starting teaching (turn dates into years, then interval recoding)
 tab m3saq5
@@ -590,11 +603,14 @@ recode m3saq5_y (0/10=10 "0-10 years")(31/max=31 "more than 30 years")(.=.), gen
 
 		tab m3saq5_c
 
+log on 
 drop m3saq5_y m3saq5
+log off
 
 *------------------------------------------------------------------------------*
 *--- dropping unnecessary vars
 *--------------------------------------
+log on dropped_vars 
 loc drop hashed_school_code hashed_school_province hashed_school_district ///
 m1s0q2_name m1s0q2_code m1s0q2_emis school_info_correct school_emis_preload ///
 school_address_preload school_code_preload school_name survey_time m7saq10 ///
