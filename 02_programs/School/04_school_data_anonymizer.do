@@ -421,7 +421,10 @@ di c(current_date)
 
 *------------------------------------------------------------------------------*
 * Quality control the anonymized dataset by comparing it to confidential set 
-*  [Note: if the follwoing code returns no error -- then the two datsets are identical]
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
 * Master dataset = [confidential]
 * using  dataset = [anonymized]
 
@@ -435,7 +438,7 @@ di c(current_date)
 */
 *-------------------------------------
 
-cf _all using "${save_dir}\school.dta", all verbose
+capture noisily cf _all using "${save_dir}\school.dta", all verbose
 
 log off QA_anonymization
 log close QA_anonymization
@@ -697,6 +700,42 @@ save "${save_dir}\teachers.dta", replace
 
 	clear
 
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential teachers datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") append
+
+use "${wrk_dir}/teachers_Stata.dta" 
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+*/
+*-------------------------------------
+
+capture noisily cf _all using "${save_dir}\teachers.dta", all verbose
+
+log off QA_anonymization
+log close QA_anonymization
+	clear
+
 
 ********************************************************************************
 * ************* 3- Students g1 and g4 data *********
@@ -812,6 +851,44 @@ log close dropped_vars
 save "${save_dir}\first_grade_assessment.dta", replace
 
 	clear
+	
+	
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential 1st grade datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") append
+
+use "${wrk_dir}/first_grade_Stata.dta" 
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+*/
+*-------------------------------------
+
+capture noisily cf _all using "${save_dir}\first_grade_assessment.dta", all verbose
+
+log off QA_anonymization
+log close QA_anonymization
+	clear
+
 
 *------------------------------------------------------------------------------*	
 *For fourth grade students
@@ -927,5 +1004,41 @@ save "${save_dir}\fourth_grade_assessment.dta", replace
 
 	clear
 	
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential 4th grade datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") append
+
+use "${wrk_dir}/fourth_grade_Stata.dta" 
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+*/
+*-------------------------------------
+
+capture noisily cf _all using "${save_dir}\fourth_grade_assessment.dta", all verbose
+
+log off QA_anonymization
+log close QA_anonymization
+	clear
+		clear all 
 	
 
