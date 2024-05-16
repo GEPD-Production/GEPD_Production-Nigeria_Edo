@@ -1,0 +1,36 @@
+---
+title: "Compare Stata an R versions of Data"
+format: html
+editor: source
+---
+
+```{r}
+library(tidyverse)
+library(dataCompareR)
+library(validate)
+library(here)
+library(ggcorrplot)
+#set directories
+dir <- here()
+
+#Country name and year of survey
+country_name <-'Nigeria-Edo'
+country <- "NGA"
+year <- '2023'
+```
+
+
+```{r}
+#read in data from R
+R_version <- read_csv(here('04_GEPD_Indicators',paste0(country,"_GEPD_Indicators_R.csv")))
+
+Stata_version <- read_csv(here('04_GEPD_Indicators',paste0(country,"_GEPD_Indicators_Stata.csv")))
+
+comp_versions <- rCompare(R_version, Stata_version, keys = c('Series'))
+```
+
+```{r compres}
+
+summary(comp_versions)
+
+```
