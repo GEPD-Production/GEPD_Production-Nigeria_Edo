@@ -384,6 +384,8 @@ label var school_code_maskd"Masked school code"
 
 order school_code_maskd district_code school_province_preload total_enrolled_c numEligible4th grade5_yesno  m1* m4* subject_test s1* s2*  m5* m6* m7* m8*
 
+sort school_code_maskd 
+
 log on dropped_vars
 *--- dropping vars with all missing (no obs)
 
@@ -437,7 +439,7 @@ di c(current_date)
 	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
 */
 *-------------------------------------
-
+sort school_code
 capture noisily cf _all using "${save_dir}\school.dta", all verbose
 
 log off QA_anonymization
@@ -672,7 +674,8 @@ do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
-order district_code school_code_maskd	teachers_id
+order district_code school_code_maskd teachers_id
+sort school_code_maskd teachers_id
 
 label var district_code "Masked district code"
 label var school_code_maskd"Masked school code"
@@ -729,13 +732,12 @@ di c(current_date)
 	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
 */
 *-------------------------------------
-
+sort school_code TEACHERS__id
 capture noisily cf _all using "${save_dir}\teachers.dta", all verbose
 
 log off QA_anonymization
 log close QA_anonymization
 	clear
-
 
 ********************************************************************************
 * ************* 3- Students g1 and g4 data *********
@@ -827,7 +829,8 @@ do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
-order school_code_maskd
+order district_code school_code_maskd ecd_assessment__id
+sort school_code_maskd ecd_assessment__id
 
 
 log on dropped_vars
@@ -882,6 +885,7 @@ di c(current_date)
 	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
 */
 *-------------------------------------
+sort school_code  ecd_assessment__id
 
 capture noisily cf _all using "${save_dir}\first_grade_assessment.dta", all verbose
 
@@ -971,15 +975,13 @@ foreach var of local drop{
 log  off dropped_vars
 
 
-order school_code_maskd
-
-
 do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
-order school_code_maskd
+order district_code school_code_maskd fourth_grade_assessment__id
+sort school_code_maskd fourth_grade_assessment__id
 
 
 log on dropped_vars
@@ -1031,8 +1033,10 @@ di c(current_date)
 	b- [Doesnt exist in using]: means var was dropped in anonymized set
 	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
 	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+	
 */
 *-------------------------------------
+sort school_code fourth_grade_assessment__id
 
 capture noisily cf _all using "${save_dir}\fourth_grade_assessment.dta", all verbose
 
