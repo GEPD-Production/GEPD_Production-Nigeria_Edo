@@ -1767,11 +1767,81 @@ cap la var  principal_salary_score "Principal's salary score"
 cap la var  principal_trained "Principal trained"
 
 
-                           
+*----- school add                          
+inputs "School Inputs score"
+coed_toilet 			//drop 
+pknw_actual_cont 		//drop		
+pknw_actual_exper 		//drop
+school_goals_relevant_total //drop
+goal_setting  "goal setting score"
+problem_solving_proactive "Problem solving-Proactive"
+problem_solving_info_collect "Problem_solving-Info_collect"
+problem_solving_stomach  "Problem solving-Stomach"
+standards_monitoring_infra "Standards for monitoring_infra"
+principal_eval_tot //drop
+
+*----- teachers add                        
+in_questionnaire  "observation in the teachers questionnaire data"
+in_assessment     "observation in the teachers assessment data"
+in_pedagogy  	  "observation in the teachers observation/teach data"
+school_weight 	  "School_weight"
+g4_teacher_count  "Grade 4 teacher count"
+g1_teacher_count  "Grade 1 teacher count"
+teacher_abs_count //drop
+teacher_abs_weight "Teacher abs weight"
+teacher_quest_count //drop
+teacher_questionnaire_weight "Teacher questionnaire weight"
+teacher_content_count //drop
+teacher_content_weight  "Teacher content weight"
+teacher_pedagogy_weight "Teacher_pedagogy_weight"
+principal_absence "Principal absence_rate"
+m5_teach_count 
+m5_teach_count_math 
+discussion_30_min 
+lesson_plan 
+teacher_bonus_attend 
+teacher_bonus_student_perform 
+teacher_bonus_extra_duty 
+teacher_bonus_hard_staff 
+teacher_bonus_subj_shortages 
+teacher_bonus_add_qualif 
+teacher_bonus_school_perform 
+pre_training_exists 
+pre_training_useful 
+pre_training_practicum 
+pre_training_practicum_lngth 
+in_service_exists 
+in_servce_lngth 
+in_service_classroom 
+practicum 
+SE_PRM_TINM_1 
+SE_PRM_TINM_2 
+SE_PRM_TINM_3 
+SE_PRM_TINM_4 
+SE_PRM_TINM_5 
+SE_PRM_TINM_6 
+SE_PRM_TINM_7 
+SE_PRM_TINM_8 
+SE_PRM_TINM_9 
+SE_PRM_TINM_10 
+motivation_teaching_1			
 			
 			
+*----- first g add                        
+school_weight 
+g4_stud_count 
+g4_class_weight 
+g4_assess_count 
+g4_student_weight_temp 
+g4_stud_weight 
+m8sbq1_number_sense			
 			
-			
+*----- fourth g add       
+school_weight 
+g1_class_weight 
+g1_assess_count 
+g1_student_weight_temp 
+g1_stud_weight                 
 			
 			
 			
