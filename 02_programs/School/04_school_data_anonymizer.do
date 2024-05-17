@@ -971,7 +971,9 @@ foreach var of local drop{
 
 								
 *Dropping un necessary varibales 
-loc drop school_code school_name_preload _merge m8s1q1 interview__id interview__key school interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification
+loc drop school_code school_name_preload _merge m8s1q1 interview__id interview__key school interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification ///
+g4_stud_count g4_assess_count g4_student_weight_temp 
+
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
