@@ -1,7 +1,8 @@
 /* Purpose: Labeling all variables across all modules of the GEPD survey data
+By: Hersheena Rajaram on:4/26/2023
 
-Last updated on:4/26/2023
-By: Hersheena Rajaram
+Last updated on : 17/05/2024 -- from line 1700 onwards, adding more varibales and labels
+By: Mohammed Eldesouky 
 */
 cap la var ETH "Dataset source"
 cap la var JOR "Dataset source"
@@ -1691,7 +1692,6 @@ cap la var m8saq7h_gir "What made the roaring sound in the distance?"
 cap la var m8saq7i_gir "Who told the animals to climb to the treetops?"
 cap la var m8saq7j_gir "Why were the animals trying to climb to the treetops?"
 cap la var m8saq7k_gir "Why couldn't some of the animals climb up the slippery tree trunks?"
-cap la var m8sbq1_number_sense ""
 cap la var m8sbq2_number_sense "Please put these numbers in the right order, from lower to higher: 2 - 17 - 55"
 cap la var m8sbq3a_arithmetic "-1227"
 cap la var student_age "ECD student age"
@@ -1768,83 +1768,68 @@ cap la var  principal_trained "Principal trained"
 
 
 *----- school add                          
-inputs "School Inputs score"
-coed_toilet 			//drop 
-pknw_actual_cont 		//drop		
-pknw_actual_exper 		//drop
-school_goals_relevant_total //drop
-goal_setting  "goal setting score"
-problem_solving_proactive "Problem solving-Proactive"
-problem_solving_info_collect "Problem_solving-Info_collect"
-problem_solving_stomach  "Problem solving-Stomach"
-standards_monitoring_infra "Standards for monitoring_infra"
-principal_eval_tot //drop
+cap la var inputs "School Inputs score"
+cap la var goal_setting  "goal setting score"
+cap la var problem_solving_proactive "Problem solving-Proactive"
+cap la var problem_solving_info_collect "Problem_solving-Info_collect"
+cap la var problem_solving_stomach  "Problem solving-Stomach"
+cap la var standards_monitoring_infra "Standards for monitoring_infra"
 
 *----- teachers add                        
-in_questionnaire  "observation in the teachers questionnaire data"
-in_assessment     "observation in the teachers assessment data"
-in_pedagogy  	  "observation in the teachers observation/teach data"
-school_weight 	  "School_weight"
-g4_teacher_count  "Grade 4 teacher count"
-g1_teacher_count  "Grade 1 teacher count"
-teacher_abs_count //drop
-teacher_abs_weight "Teacher abs weight"
-teacher_quest_count //drop
-teacher_questionnaire_weight "Teacher questionnaire weight"
-teacher_content_count //drop
-teacher_content_weight  "Teacher content weight"
-teacher_pedagogy_weight "Teacher_pedagogy_weight"
-principal_absence "Principal absence_rate"
-m5_teach_count 
-m5_teach_count_math 
-discussion_30_min 
-lesson_plan 
-teacher_bonus_attend 
-teacher_bonus_student_perform 
-teacher_bonus_extra_duty 
-teacher_bonus_hard_staff 
-teacher_bonus_subj_shortages 
-teacher_bonus_add_qualif 
-teacher_bonus_school_perform 
-pre_training_exists 
-pre_training_useful 
-pre_training_practicum 
-pre_training_practicum_lngth 
-in_service_exists 
-in_servce_lngth 
-in_service_classroom 
-practicum 
-SE_PRM_TINM_1 
-SE_PRM_TINM_2 
-SE_PRM_TINM_3 
-SE_PRM_TINM_4 
-SE_PRM_TINM_5 
-SE_PRM_TINM_6 
-SE_PRM_TINM_7 
-SE_PRM_TINM_8 
-SE_PRM_TINM_9 
-SE_PRM_TINM_10 
-motivation_teaching_1			
+cap la var in_questionnaire  "observation in the teachers questionnaire data"
+cap la var in_assessment     "observation in the teachers assessment data"
+cap la var in_pedagogy  	  "observation in the teachers observation/teach data"
+cap la var school_weight 	  "School_weight"
+cap la var g4_teacher_count  "Grade 4 teacher count"
+cap la var g1_teacher_count  "Grade 1 teacher count"
+cap la var teacher_abs_weight "Teacher abs weight"
+cap la var teacher_questionnaire_weight "Teacher questionnaire weight"
+cap la var teacher_content_weight  "Teacher content weight"
+cap la var teacher_pedagogy_weight "Teacher_pedagogy_weight"
+cap la var principal_absence "Principal absence_rate"
+cap la var m5_teach_count "Count of non missing content knowledge obs by school"
+cap la var m5_teach_count_math "Count of non missing math content knowledge obs by school"
+cap la var discussion_30_min  "discussion 30 min "
+cap la var lesson_plan 	   "lesson plan"
+cap la var teacher_bonus_attend  "teacher bonus_attendance"
+cap la var teacher_bonus_student_perform "teacher bonus_student performance"
+cap la var teacher_bonus_extra_duty  "teacher bonus_extra duty"
+cap la var teacher_bonus_hard_staff  "teacher bonus_hard staff"
+cap la var teacher_bonus_subj_shortages "teacher bonus-subj shortages"
+cap la var teacher_bonus_add_qualif "teacher bonus-add qualif"
+cap la var teacher_bonus_school_perform "teacher bonus-school perform "
+cap la var pre_training_exists  "pre training-exists"
+cap la var pre_training_useful  "pre training-useful"
+cap la var pre_training_practicum "pre training-practicum"
+cap la var pre_training_practicum_lngth "pre training-practicum length"
+cap la var in_service_exists "in service training- exists"
+cap la var in_servce_lngth "in service training- length"
+cap la var in_service_classroom "in service training- classroom"
+cap la var practicum "Practicum"
+cap la var SE_PRM_TINM_1 "(De Facto) % teachers agree/strongly agree (acceptable teacher to be absent if curriculum~)"
+cap la var SE_PRM_TINM_2 "(De Facto) % teachers agree/strongly agree (acceptable teacher to be absent if stud~)"
+cap la var SE_PRM_TINM_3 "(De Facto) % teachers agree/strongly agree (acceptable teacher to be absent if useful community~)"
+cap la var SE_PRM_TINM_4 "(De Facto) % teachers agree/strongly agree (Students deserve more attention if they attend scho~)"
+cap la var SE_PRM_TINM_5 "(De Facto) % teachers agree/strongly agree (Students deserve more attention if they come to sch~)"
+cap la var SE_PRM_TINM_6 "(De Facto) % teachers agree/strongly agree (Students deserve more attention if they are motivat~)"
+cap la var SE_PRM_TINM_7 "(De Facto) % teachers agree/strongly agree (Students have a certain amount of intelligence and~)"
+cap la var SE_PRM_TINM_8 "(De Facto) % teachers agree/strongly agree (To be honest, students can't really change how inte~)"
+cap la var SE_PRM_TINM_9 "(De Facto) % teachers agree/strongly agree (Students can always substantially change how intell~)"
+cap la var SE_PRM_TINM_10 "(De Facto) % teachers agree/strongly agree (Students can change even their basic intelligence l~)"
+cap la var motivation_teaching_1 "teacher motivation for teaching_1"
 			
 			
-*----- first g add                        
-school_weight 
-g4_stud_count 
-g4_class_weight 
-g4_assess_count 
-g4_student_weight_temp 
-g4_stud_weight 
-m8sbq1_number_sense			
+*----- fourth g add                        
+cap la var g4_class_weight  "g4_class_weight"
+cap la var g4_stud_weight    "g4_stud_weight"
+cap la var m8sbq1_number_sense	"Please put these numbers intherightorder, from lower tohigher:2-17-55-117-123-987"		
 			
-*----- fourth g add       
-school_weight 
-g1_class_weight 
-g1_assess_count 
-g1_student_weight_temp 
-g1_stud_weight                 
+*----- first g add       
+cap la var g1_class_weight "g1_class_weight "
+cap la var g1_stud_weight  "g1_stud_weight"               
 			
 			
 			
 			
 			
-			
+
