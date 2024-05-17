@@ -365,7 +365,8 @@ teacher_phone_number1 teacher_phone_number2 teacher_phone_number3 teacher_phone_
 teacher_phone_number5 m1s0q6 m1saq2 m1saq2b fillout_teacher_q fillout_teacher_con ///
 fillout_teacher_obs observation_id sssys_irnd has__errors interview__status teacher_etri_list_photo ///
 m5s2q1c_number_new m5s2q1e_number_new m5s1q1f_grammer_new monitoring_inputs_temp monitoring_infrastructure_temp ///
-principal_training_temp school_teacher_ques_INPT
+principal_training_temp school_teacher_ques_INPT ///
+coed_toilet pknw_actual_cont pknw_actual_exper school_goals_relevant_total principal_eval_tot
 
 foreach var of local drop{
       capture drop `var'
@@ -661,7 +662,8 @@ m3sbq10_other_tmna m3sdq5_tsup_other m3sdq12_other_tsup m3sdq17_other_ildr ///
 m3sdq18_other_ildr m3sdq25_other_ildr m3seq5_other_tatt m3seq8_other_tsdp ///
 unique_teach_id teacher_unique_id iden district interview__key interview__id ///
 school tehsil shift schoollevel strata m4saq1_lwr m3_lwr m5_lwr enumerators_preload__0-enumerators_preload__99 ///
-m1s0q1_name_other m1s0q1_comments m1s0q8 m1s0q9__Timestamp m1s0q1_name m6_teacher_name m6s1q1__0-m6s1q1__5 Date_time m8_teacher_name m8s1q1__0-comments second_name first_name m2saq22 location teacher_name1-teacher_name4 senatorialdistrict classification
+m1s0q1_name_other m1s0q1_comments m1s0q8 m1s0q9__Timestamp m1s0q1_name m6_teacher_name m6s1q1__0-m6s1q1__5 Date_time m8_teacher_name m8s1q1__0-comments second_name first_name m2saq22 location teacher_name1-teacher_name4 senatorialdistrict classification ///
+teacher_abs_count teacher_quest_count teacher_content_count 
 
 foreach var of local drop{
       capture drop `var'
@@ -817,7 +819,9 @@ foreach var of local drop{
 
 
 *Dropping un necessary varibales 
-loc drop school_code school_name_preload m6s1q1 interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification
+loc drop school_code school_name_preload m6s1q1 interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification ///
+g1_assess_count g1_student_weight_temp 
+
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
