@@ -840,6 +840,7 @@ do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 order district_code school_code_maskd ecd_assessment__id
 sort school_code_maskd ecd_assessment__id
 
+label var school_code_maskd"Masked school code"
 
 log on dropped_vars
 *--- dropping vars with all missing (no obs)
@@ -992,6 +993,8 @@ do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 order district_code school_code_maskd fourth_grade_assessment__id
 sort school_code_maskd fourth_grade_assessment__id
+
+label var school_code_maskd"Masked school code"
 
 
 log on dropped_vars
