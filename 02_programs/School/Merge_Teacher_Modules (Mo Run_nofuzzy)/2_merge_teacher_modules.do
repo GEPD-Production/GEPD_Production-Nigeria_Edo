@@ -64,6 +64,10 @@ replace interview__key="999999" if missing(interview__key)
 
 * Teacher name is m4saq1 and teacher id is m4saq1_number
 count if missing(m4saq1_number) 				//0 missing obs
+count if m4saq1_number==0 						//1 to be corrected -- correct ID was checked and sent by Brian 
+	br if m4saq1_number==0 
+		replace m4saq1 ="Joy Aminu Bello" if m4saq1_number==0
+		replace m4saq1_number=2 if m4saq1_number==0
 
 ** There are xx duplicates where the same teacher id was assigned to two different teachers in the same school
 
@@ -101,7 +105,7 @@ replace m3sb_tnumber=9999 if missing(m3sb_tnumber)
 frame change roster
 joinby interview__key teacher_name1 TEACHERS__id using"$temp/teacher_pedagogy_c.dta", unmatched(both)
 
-tab _merge       // 181/200 merged -- 19 did not merge (will try to re-merge them using teacher ID only). 
+tab _merge       // 182/200 merged -- 18 did not merge (will try to re-merge them using teacher ID only). 
 
 * we save data with only unmacthed and prep it
 frame copy roster roster_un
@@ -133,10 +137,11 @@ frame change roster
 drop if _merge==2
 rename _merge merge_1
 merge 1:1 interview__key TEACHERS__id using "$temp/pedagogy_un.dta", generate(newv) update
-	tab newv 			//18/19 were matched and 1 was added as additional rows but did not match becuase of wrong teacher_id and name "m4saq1"
-unique interview__key m4saq1_number if !missing(m4saq1_number)		//200 observation from pedagogy modules were added (199 matched)
+	tab newv 			//18/18 were matched 
+	
+unique interview__key m4saq1_number if !missing(m4saq1_number)		//200 observation from pedagogy modules were added (200 matched)
 	br m4saq1 m2saq2 if !missing(in_pedagogy )  //verifying the matches case by case
-	* confirm that 199 from pedagogy were matched to the correct teachers in roster
+	* confirm that 200 from pedagogy were matched to the correct teachers in roster
 	drop newv
 
 * replace back missing m3sbt_number
