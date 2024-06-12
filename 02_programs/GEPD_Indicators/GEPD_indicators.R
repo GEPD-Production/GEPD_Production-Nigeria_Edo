@@ -1162,7 +1162,7 @@ indicators <-   list(
   c("SE.PRM.LHTH.6" ,"100*as.numeric(`MICS/Other - Percentage of children age 6-59 months who received deworming medication.`)", "learners", "NA","NA"), #(De Facto) Percent of children age 6-59 months who received deworming medication
   c("SE.PRM.LHTH.7" ,"antenatal_skilled_delivery", "policy_survey", "NA","NA"), #(De Jure) Is there a policy that guarantees pregnant women free antenatal visits and skilled delivery?
   c("SE.PRM.LHTH.8" ,"100*as.numeric(`MICS/DHS - Percentage of women age 15-49 years with a live birth in the last 2 years whose most recent live birth was delivered in a health facility`)", "learners", "NA","NA"), #(De Facto) Percent of women age 15-49 years with a live birth in the last 2 years whose most recent live birth was deliv~
-  c("SE.PRM.LHTH.DF" ,"4*(SE.PRM.LHTH.2+SE.PRM.LHTH.3+ SE.PRM.LHTH.8)/300+1", "aggregate", 'c("SE.PRM.LHTH.2", "SE.PRM.LHTH.3", "SE.PRM.LHTH.8")',"NA"),#(De Facto) Policy Lever (Learners) - Health
+  c("SE.PRM.LHTH.DF" ,"4*(SE.PRM.LHTH.2+SE.PRM.LHTH.3+SE.PRM.LHTH.3+ SE.PRM.LHTH.8)/400+1", "aggregate", 'c("SE.PRM.LHTH.2", "SE.PRM.LHTH.3", "SE.PRM.LHTH.6", "SE.PRM.LHTH.8")',"NA"),#(De Facto) Policy Lever (Learners) - Health
   c("SE.PRM.LHTH.DJ" ,"health_programs", "policy_survey", "NA","NA"),#(De Jure) Policy Lever (Learners) - Health
   c("SE.PRM.LHTH" ,"SE.PRM.LHTH.DF", "aggregate", 'c("SE.PRM.LHTH.DF")',"NA"),   #Policy Lever (Learners) - Health
       
@@ -1203,10 +1203,10 @@ indicators <-   list(
 
   c( "SE.PRM.LSKC.1" ,"good_parent_sharing", "policy_survey", "NA","NA"), #(De Jure) Does the government offer programs that aim to share good parenting practices with caregivers?
   c("SE.PRM.LSKC.2" ,"promote_ece_stimulation", "policy_survey", "NA","NA"), #(De Jure) Are any of the following publicly-supported delivery channels used to reach families in order to promote early ~
-  c("SE.PRM.LSKC.3" ,"-999", "policy_survey", "NA","NA"), #(De Facto) Percent of children under age 5 who have three or more children's books
+  c("SE.PRM.LSKC.3" ,"100*as.numeric(`Percentage of children under age 5 who have three or more children books`)", "learners", "NA","NA"), #(De Facto) Percent of children under age 5 who have three or more children's books
   c("SE.PRM.LSKC.4" ,"100*as.numeric(`Percentage of children age 24-59 months engaged in four or more activities to provide early stimulation and responsive care in the last 3 days with any adult in the household`)", "learners", "NA","NA"), #(De Facto) Percent of children age 24-59 months engaged in four or more activities to provide early stimulation and respo~
 
-  c("SE.PRM.LSKC.DF" , "4*(SE.PRM.LSKC.4)/100+1", "aggregate", 'c("SE.PRM.LSKC.4")',"NA"),#(De Facto) Policy Lever (Learners) - Caregiver Capacity - Skills Capacity
+  c("SE.PRM.LSKC.DF" , "4*(SE.PRM.LSKC.4+SE.PRM.LSKC.3)/200+1", "aggregate", 'c("SE.PRM.LSKC.3","SE.PRM.LSKC.4")',"NA"),#(De Facto) Policy Lever (Learners) - Caregiver Capacity - Skills Capacity
   c("SE.PRM.LSKC.DJ" ,"caregiver_skills", "policy_survey", "NA","NA"),
 #(De Jure) Policy Lever (Learners) - Caregiver Capacity - Skills Capacity
 c("SE.PRM.LSKC" ,  "SE.PRM.LSKC.DF" , "aggregate", 'c("SE.PRM.LSKC.DF")',"NA"), #Policy Lever (Learners) - Caregiver Capacity - Skills Capacity
@@ -1354,8 +1354,8 @@ c("SE.PRM.BFIN.4" ,"4*as.numeric(`Efficiency by the score from the Public Expend
 c("SE.PRM.BFIN.5" ,"-999", "finance", "NA","NA"),#(Financing) - Equity
 c("SE.PRM.BFIN.2" , "as.numeric(`Government expenditure per school age person, primary (% of GDP per capita)`)", "finance", "NA","NA"), #(Financing) - Adequacy expressed by the per child spending
 
-c("SE.PRM.BFIN"   , "as.numeric(0.5*SE.PRM.BFIN.2+0.5*(SE.PRM.BFIN.3+SE.PRM.BFIN.4)/2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA"), #Politics & Bureaucratic Capacity - Financing
-c("SE.PRM.BFIN.1" , "as.numeric(0.5*SE.PRM.BFIN.2+0.5*(SE.PRM.BFIN.3+SE.PRM.BFIN.4)/2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA")#Financing score; where a score of 1 indicates low effectiveness and 5 indicates high effectiveness in terms of adequacy, e~
+c("SE.PRM.BFIN"   , "as.numeric(0.5*SE.PRM.BFIN.2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA"), #Politics & Bureaucratic Capacity - Financing
+c("SE.PRM.BFIN.1" , "as.numeric(0.5*SE.PRM.BFIN.2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA")#Financing score; where a score of 1 indicates low effectiveness and 5 indicates high effectiveness in terms of adequacy, e~
       
   
   

@@ -489,8 +489,7 @@ df_reg<-first_grade %>%
 
 ```{r}
 #| label: teach_plot
-#| eval: false
-#| include: false
+
  #############################
     # Create database with just learning outcomes for regressions
     ##############################
