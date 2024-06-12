@@ -365,7 +365,8 @@ teacher_phone_number1 teacher_phone_number2 teacher_phone_number3 teacher_phone_
 teacher_phone_number5 m1s0q6 m1saq2 m1saq2b fillout_teacher_q fillout_teacher_con ///
 fillout_teacher_obs observation_id sssys_irnd has__errors interview__status teacher_etri_list_photo ///
 m5s2q1c_number_new m5s2q1e_number_new m5s1q1f_grammer_new monitoring_inputs_temp monitoring_infrastructure_temp ///
-principal_training_temp school_teacher_ques_INPT
+principal_training_temp school_teacher_ques_INPT ///
+coed_toilet pknw_actual_cont pknw_actual_exper school_goals_relevant_total principal_eval_tot
 
 foreach var of local drop{
       capture drop `var'
@@ -383,6 +384,8 @@ label var district_code "Masked district code"
 label var school_code_maskd"Masked school code"
 
 order school_code_maskd district_code school_province_preload total_enrolled_c numEligible4th grade5_yesno  m1* m4* subject_test s1* s2*  m5* m6* m7* m8*
+
+sort school_code_maskd 
 
 log on dropped_vars
 *--- dropping vars with all missing (no obs)
@@ -421,7 +424,10 @@ di c(current_date)
 
 *------------------------------------------------------------------------------*
 * Quality control the anonymized dataset by comparing it to confidential set 
-*  [Note: if the follwoing code returns no error -- then the two datsets are identical]
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
 * Master dataset = [confidential]
 * using  dataset = [anonymized]
 
@@ -434,8 +440,8 @@ di c(current_date)
 	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
 */
 *-------------------------------------
-
-cf _all using "${save_dir}\school.dta", all verbose
+sort school_code
+capture noisily cf _all using "${save_dir}\school.dta", all verbose
 
 log off QA_anonymization
 log close QA_anonymization
@@ -656,7 +662,12 @@ m3sbq10_other_tmna m3sdq5_tsup_other m3sdq12_other_tsup m3sdq17_other_ildr ///
 m3sdq18_other_ildr m3sdq25_other_ildr m3seq5_other_tatt m3seq8_other_tsdp ///
 unique_teach_id teacher_unique_id iden district interview__key interview__id ///
 school tehsil shift schoollevel strata m4saq1_lwr m3_lwr m5_lwr enumerators_preload__0-enumerators_preload__99 ///
-m1s0q1_name_other m1s0q1_comments m1s0q8 m1s0q9__Timestamp m1s0q1_name m6_teacher_name m6s1q1__0-m6s1q1__5 Date_time m8_teacher_name m8s1q1__0-comments second_name first_name m2saq22 location teacher_name1-teacher_name4 senatorialdistrict classification
+m1s0q1_name_other m1s0q1_comments m1s0q8 m1s0q9__Timestamp m1s0q1_name m6_teacher_name m6s1q1__0-m6s1q1__5 Date_time m8_teacher_name m8s1q1__0-comments second_name first_name m2saq22 location teacher_name1-teacher_name4 senatorialdistrict classification ///
+teacher_abs_count teacher_quest_count teacher_content_count ///
+emis_code xcoordinate ycoordinate total_enrollment school_headmaster_contact_no ///
+nstudents_district total_district share_district /// 
+sample_size totalstudents strata_count strata_size strata_school_prob strata_prob index tag ///
+flag_unmatched tag_v2 flag_mismatch school_collapse_temp
 
 foreach var of local drop{
       capture drop `var'
@@ -669,7 +680,8 @@ do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
-order district_code school_code_maskd	teachers_id
+order district_code school_code_maskd teachers_id
+sort school_code_maskd teachers_id
 
 label var district_code "Masked district code"
 label var school_code_maskd"Masked school code"
@@ -697,6 +709,41 @@ save "${save_dir}\teachers.dta", replace
 
 	clear
 
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential teachers datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") append
+
+use "${wrk_dir}/teachers_Stata.dta" 
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+*/
+*-------------------------------------
+sort school_code TEACHERS__id
+capture noisily cf _all using "${save_dir}\teachers.dta", all verbose
+
+log off QA_anonymization
+log close QA_anonymization
+	clear
 
 ********************************************************************************
 * ************* 3- Students g1 and g4 data *********
@@ -776,7 +823,9 @@ foreach var of local drop{
 
 
 *Dropping un necessary varibales 
-loc drop school_code school_name_preload m6s1q1 interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification
+loc drop school_code school_name_preload m6s1q1 interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification ///
+g1_assess_count g1_student_weight_temp 
+
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
@@ -788,8 +837,10 @@ do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
-order school_code_maskd
+order district_code school_code_maskd ecd_assessment__id
+sort school_code_maskd ecd_assessment__id
 
+label var school_code_maskd"Masked school code"
 
 log on dropped_vars
 *--- dropping vars with all missing (no obs)
@@ -812,6 +863,45 @@ log close dropped_vars
 save "${save_dir}\first_grade_assessment.dta", replace
 
 	clear
+	
+	
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential 1st grade datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") append
+
+use "${wrk_dir}/first_grade_Stata.dta" 
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+*/
+*-------------------------------------
+sort school_code  ecd_assessment__id
+
+capture noisily cf _all using "${save_dir}\first_grade_assessment.dta", all verbose
+
+log off QA_anonymization
+log close QA_anonymization
+	clear
+
 
 *------------------------------------------------------------------------------*	
 *For fourth grade students
@@ -886,7 +976,9 @@ foreach var of local drop{
 
 								
 *Dropping un necessary varibales 
-loc drop school_code school_name_preload _merge m8s1q1 interview__id interview__key school interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification
+loc drop school_code school_name_preload _merge m8s1q1 interview__id interview__key school interview__id interview__key school district tehsil shift schoollevel strata location senatorialdistrict classification ///
+g4_stud_count g4_assess_count g4_student_weight_temp 
+
 foreach var of local drop{
       capture drop `var'
       di in r "return code for: `var': " _rc
@@ -894,15 +986,15 @@ foreach var of local drop{
 log  off dropped_vars
 
 
-order school_code_maskd
-
-
 do "${clone}/02_programs/School/Merge_Teacher_Modules/labels.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/zz_label_all_variables.do"
 do "${clone}/02_programs/School/Merge_Teacher_Modules/z_value_labels.do"
 
 
-order school_code_maskd
+order district_code school_code_maskd fourth_grade_assessment__id
+sort school_code_maskd fourth_grade_assessment__id
+
+label var school_code_maskd"Masked school code"
 
 
 log on dropped_vars
@@ -927,5 +1019,43 @@ save "${save_dir}\fourth_grade_assessment.dta", replace
 
 	clear
 	
+*------------------------------------------------------------------------------*
+*Comparing anonymized & confidential 4th grade datasets:
+*-------------------------------------
+log using "${save_dir}\sensetive_masked\QA_anonymization",  name("QA_anonymization") append
+
+use "${wrk_dir}/fourth_grade_Stata.dta" 
+
+di c(filename)
+di c(current_time)
+di c(current_date)
+
+*------------------------------------------------------------------------------*
+* Quality control the anonymized dataset by comparing it to confidential set 
+*  Note----: 
+*		[if the follwoing code returns no error -- then the values and variables of the two datsets are identical]
+*		[if the follwoing code returns error code "r(9)" -- then some/all values and variables of two datsets are different]
+
+* Master dataset = [confidential]
+* using  dataset = [anonymized]
+
+* This test compares the individual values of the varibales 
+* There are 4 possible test outcomes: 
+/*
+	a- [Match]: means varibales' values are identical 
+	b- [Doesnt exist in using]: means var was dropped in anonymized set
+	c- [# mistamtches in using]: varibales' values of two data are changed (# values/obs)
+	d- [formate in master vs. formate in using]: varibales formatting has changed (e.g. int - str)
+	
+*/
+*-------------------------------------
+sort school_code fourth_grade_assessment__id
+
+capture noisily cf _all using "${save_dir}\fourth_grade_assessment.dta", all verbose
+
+log off QA_anonymization
+log close QA_anonymization
+	clear
+		clear all 
 	
 
