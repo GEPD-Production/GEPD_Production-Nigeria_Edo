@@ -127,6 +127,106 @@ collapse (max) `numvars' (firstnm) `stringvars', by(school_code)
 ***************
 ***************
 
+****
+* Read in Teacher Pedagogy scores from Excel
+****
+frame create teacher_pedg
+frame change teacher_pedg
+
+import excel "${data_dir}\\School\\Teach_scores_formatted.xlsx", sheet("Scoring Sheet") firstrow clear
+
+
+gl low_medium_high s_0_1_2 s_0_2_2 s_0_3_2 s_a2_1 s_a2_2 s_a2_3 s_b3_1 s_b3_2 s_b3_3 s_b3_4 s_b5_1 s_b5_2 s_b6_1 s_b6_2 s_b6_3 s_c7_1 s_c7_2 s_c7_3  s_c8_1 s_c8_2 s_c8_3 s_c9_1 s_c9_2 s_c9_3
+
+gl low_medium_high_na s_a1_1 s_a1_2 s_a1_3 s_a1_4a s_a1_4b s_b4_2 s_b4_3
+
+gl yes_no s_0_1_1 s_0_2_1 s_0_3_1
+
+gl overall s_a1 s_a2 s_b3 s_b4 s_b5 s_b6 s_c7 s_c8 s_c9
+
+
+** Verfying that the teach vars have observations
+**# Bookmark #1
+
+foreach var in $overall $yes_no $low_medium_high $low_medium_high_na {
+sum `var'
+}
+
+** encoding the string responses into numeric -- Read below to understnad how the loop works 
+	/*
+	a- we define value lables to be used for encoding
+	b- the loop first execute a test to confirm the varibales are coded as string:
+		- if it is string (rc==0), the loop will execute and encode them into factor/numerical and labled vars
+		- if it is numeric(rc==7), the loop will stop executing with an error -- already encoded into factor (do nothing more).
+
+	*/
+
+foreach var of global overall {
+capture confirm string varibale `v'
+if (_rc == 7) continue 
+	*these aggregate vars must be numeric -- if they are, the loop would do nothing
+
+	destring `var', replace
+		tab `var'
+}
+
+
+** create sub-indicators from TEACH and calculating Teach score before collapsing
+
+*  a- first, create an average score var of the sub-componenets  
+
+egen classroom_culture = rowmean(s_a1 s_a2)
+	
+egen instruction = rowmean(s_b3 s_b4 s_b5 s_b6)
+
+egen socio_emotional_skills = rowmean(s_c7 s_c8 s_c9)
+			
+egen teach_score=rowmean(classroom_culture instruction socio_emotional_skills)
+
+*reshape subquestions from long to wide
+
+
+frame copy teacher_pedg teacher_pedg_sub
+frame change teacher_pedg_sub
+
+keep Schoolcode $yes_no $low_medium_high $low_medium_high_na
+
+bysort Schoolcode: gen clip=_n
+tostring clip, replace
+replace clip = "_" + clip
+
+reshape wide $yes_no $low_medium_high $low_medium_high_na, i(Schoolcode) j(clip) string
+
+*rename to be consistent with other files
+foreach var in $yes_no $low_medium_high $low_medium_high_na {
+	local cur_name1 = "`var'" + "_1"
+	local cur_name2 = "`var'" + "_2"
+
+	
+	local new_name1=  subinstr("`var'", "s_","s1_",1)
+	local new_name2=  subinstr("`var'", "s_","s2_",1)
+	
+
+	rename `cur_name1' `new_name1'
+	rename `cur_name2' `new_name2'
+
+}
+
+frame change teacher_pedg
+
+keep Schoolcode $overall classroom_culture instruction socio_emotional_skills teach_score
+*collapse to teacher level
+collapse $overall classroom_culture instruction socio_emotional_skills teach_score , by(Schoolcode)
+
+frlink 1:1 Schoolcode, frame(teacher_pedg_sub)
+frget *, from(teacher_pedg_sub)
+
+rename Schoolcode school_code
+
+drop teacher_pedg_sub
+
+
+
 frame create teachers
 frame change teachers
 ********
@@ -146,6 +246,26 @@ cap drop $strata
 
 frlink m:1 interview__key, frame(school)
 frget school_code ${strata} $other_info urban_rural strata school_weight numEligible numEligible4th, from(school)
+
+*bring in the teacher pedagogy scores
+frame copy teachers teacher_pedg_list
+frame change teacher_pedg_list
+
+keep if !missing(m4saq1)
+keep school_code TEACHERS__id m4saq1 m4saq1_number
+
+*join with teacher_pedg
+frlink 1:1 school_code, frame(teacher_pedg) 
+frget *, from(teacher_pedg)
+
+
+
+frame change teachers
+drop s1_0_1_1 - s2_c9_3
+
+frlink 1:1 school_code TEACHERS__id , frame(teacher_pedg_list) 
+frget s1_0_1_1 - s2_c9_3 classroom_culture instruction socio_emotional_skills teach_score , from(teacher_pedg_list)
+
 
 *get number of 4th grade teachers for weights
 egen g4_teacher_count=sum(m3saq2__4), by(school_code)
