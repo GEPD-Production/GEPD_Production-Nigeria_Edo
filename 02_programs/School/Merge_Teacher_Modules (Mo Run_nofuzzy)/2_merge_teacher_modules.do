@@ -514,6 +514,7 @@ replace TEACHERS__id =3 if interview__key=="45-36-10-93" & m4saq1_number==2
 replace TEACHERS__id =7 if interview__key=="47-61-21-41" & m4saq1_number==9
 replace TEACHERS__id =4 if interview__key=="47-95-51-05" & m4saq1_number==3
 replace TEACHERS__id =4 if interview__key=="85-01-02-94" & m4saq1_number==3
+replace TEACHERS__id =2 if interview__key=="26-55-01-78" & m4saq1_number==0
 
 
 replace m4saq1_number = TEACHERS__id //coping the changes to the module's ID var 
