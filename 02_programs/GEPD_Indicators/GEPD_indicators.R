@@ -103,11 +103,13 @@ indicator_stats <- function(name, indicator, dataset, tag,  unit) {
       
     } else if (unit=="Female") {
       
-      stat_df<-school_dta
+      stat_df<-school_dta %>%
+        filter(m7saq10==2)
       
     } else if (unit=="Male") {
       
-      stat_df<-school_dta
+      stat_df<-school_dta %>%
+        filter(m7saq10==1)
       
     } else if (unit=="Rural") {
       
@@ -1354,8 +1356,8 @@ c("SE.PRM.BFIN.4" ,"4*as.numeric(`Efficiency by the score from the Public Expend
 c("SE.PRM.BFIN.5" ,"-999", "finance", "NA","NA"),#(Financing) - Equity
 c("SE.PRM.BFIN.2" , "as.numeric(`Government expenditure per school age person, primary (% of GDP per capita)`)", "finance", "NA","NA"), #(Financing) - Adequacy expressed by the per child spending
 
-c("SE.PRM.BFIN"   , "as.numeric(0.5*SE.PRM.BFIN.2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA"), #Politics & Bureaucratic Capacity - Financing
-c("SE.PRM.BFIN.1" , "as.numeric(0.5*SE.PRM.BFIN.2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA")#Financing score; where a score of 1 indicates low effectiveness and 5 indicates high effectiveness in terms of adequacy, e~
+c("SE.PRM.BFIN"   , "as.numeric(SE.PRM.BFIN.2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA"), #Politics & Bureaucratic Capacity - Financing
+c("SE.PRM.BFIN.1" , "as.numeric(SE.PRM.BFIN.2)", "aggregate", 'c("SE.PRM.BFIN.2", "SE.PRM.BFIN.3", "SE.PRM.BFIN.4")',"NA")#Financing score; where a score of 1 indicates low effectiveness and 5 indicates high effectiveness in terms of adequacy, e~
       
   
   
