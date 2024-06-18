@@ -54,7 +54,7 @@ use "${data_dir}\\School\\epdash.dta"
 
 frame create weights
 frame change weights
-import delimited "${data_dir}\\Sampling\\${weights_file_name}"
+import delimited "${data_dir}\\Sampling\\GEPD_Edo_weights_2023-06-20.csv"
 
 * rename school code
 rename ${school_code_name} school_code 
