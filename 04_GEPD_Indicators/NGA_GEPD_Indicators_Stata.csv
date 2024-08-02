@@ -214,22 +214,22 @@
 "SE.PRM.LCBC.5","(De Jure) According to policy, are ECCE professionals working at public or private centers required to complete in-service training in ECCE service delivery?","Global Education Policy Dashboard","World Bank",NA,0,NA,NA,NA,NA,1
 "SE.PRM.LCBC.DF","(De Facto) Policy Lever (Learners) - Center-Based Care","Global Education Policy Dashboard","World Bank",NA,3.556,NA,NA,NA,NA,1
 "SE.PRM.LCBC.DJ","(De Jure) Policy Lever (Learners) - Center-Based Care","Global Education Policy Dashboard","World Bank",NA,4.333333333333333,NA,NA,NA,NA,1
-"SE.PRM.LERN","Proficiency on GEPD Assessment","Global Education Policy Dashboard","World Bank","The fraction of students scoring at least 80% on 4th grade math and language student assessment.",0,0,0,0,0,0
-"SE.PRM.LERN.1","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.1.F","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Female","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.1.M","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Male","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.1.R","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Rural","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.1.U","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Urban","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.2","(De Facto) Percent of children proficient in literacy according to GEPD School Survey","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.2.F","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Female","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.2.M","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Male","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.2.R","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Rural","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.2.U","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Urban","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.3","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.3.F","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Female","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.3.M","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Male","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.3.R","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Rural","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
-"SE.PRM.LERN.3.U","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Urban","Global Education Policy Dashboard","World Bank",NA,0,0,0,0,0,0
+"SE.PRM.LERN","Proficiency on GEPD Assessment","Global Education Policy Dashboard","World Bank","The fraction of students scoring at least 80% on 4th grade math and language student assessment.",NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.1","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.1.F","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Female","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.1.M","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Male","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.1.R","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Rural","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.1.U","(De Facto) Percent of children proficient in literacy and numeracy according to GEPD School Survey - Urban","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.2","(De Facto) Percent of children proficient in literacy according to GEPD School Survey","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.2.F","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Female","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.2.M","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Male","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.2.R","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Rural","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.2.U","(De Facto) Percent of children proficient in literacy according to GEPD School Survey - Urban","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.3","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.3.F","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Female","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.3.M","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Male","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.3.R","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Rural","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
+"SE.PRM.LERN.3.U","(De Facto) Percent of children proficient in numeracy according to GEPD School Survey - Urban","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1
 "SE.PRM.LFCP","Policy Lever (Learners) - Caregiver Capacity – Financial Capacity","Global Education Policy Dashboard","World Bank",NA,2.136,NA,NA,NA,NA,1
 "SE.PRM.LFCP.1","(De Jure) Are anti poverty interventions that focus on ECD publicly supported?","Global Education Policy Dashboard","World Bank",NA,0,NA,NA,NA,NA,1
 "SE.PRM.LFCP.2","(De Jure) Are cash transfers conditional on ECD services/enrollment publicly supported?","Global Education Policy Dashboard","World Bank",NA,NA,NA,NA,NA,NA,1

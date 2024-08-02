@@ -555,22 +555,22 @@ indicator_stats <- function(name, indicator, dataset, tag, unit) {
 # api_final[grep('LERN', api_final$Series),1]
 
 indicators <- list(
-  c("SE.PRM.LERN", "as.numeric(NA)", "fourth_grade", "LERN", "All"),
-  c("SE.PRM.LERN.1", "as.numeric(NA)", "fourth_grade", "LERN", "All"),
-  c("SE.PRM.LERN.1.F", "as.numeric(NA)", "fourth_grade", "LERN", "Female"),
-  c("SE.PRM.LERN.1.M", "as.numeric(NA)", "fourth_grade", "LERN", "Male"),
-  c("SE.PRM.LERN.1.R", "as.numeric(NA)", "fourth_grade", "LERN", "Rural"),
-  c("SE.PRM.LERN.1.U", "as.numeric(NA)", "fourth_grade", "LERN", "Urban"),
-  c("SE.PRM.LERN.2", "as.numeric(NA)", "fourth_grade", "LERN", "All"),
-  c("SE.PRM.LERN.2.F", "as.numeric(NA)", "fourth_grade", "LERN", "Female"),
-  c("SE.PRM.LERN.2.M", "as.numeric(NA)", "fourth_grade", "LERN", "Male"),
-  c("SE.PRM.LERN.2.R", "as.numeric(NA)", "fourth_grade", "LERN", "Rural"),
-  c("SE.PRM.LERN.2.U", "as.numeric(NA)", "fourth_grade", "LERN", "Urban"),
-  c("SE.PRM.LERN.3", "as.numeric(NA)", "fourth_grade", "LERN", "All"),
-  c("SE.PRM.LERN.3.F", "as.numeric(NA)", "fourth_grade", "LERN", "Female"),
-  c("SE.PRM.LERN.3.M", "as.numeric(NA)", "fourth_grade", "LERN", "Male"),
-  c("SE.PRM.LERN.3.R", "as.numeric(NA)", "fourth_grade", "LERN", "Rural"),
-  c("SE.PRM.LERN.3.U", "as.numeric(NA)", "fourth_grade", "LERN", "Urban"),
+  c("SE.PRM.LERN", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.1", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.1.F", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.1.M", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.1.R", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.1.U", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.2", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.2.F", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.2.M", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.2.R", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.2.U", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.3", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.3.F", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.3.M", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.3.R", "as.numeric(NA)", "policy_survey", "NA", "NA"),
+  c("SE.PRM.LERN.3.U", "as.numeric(NA)", "policy_survey", "NA", "NA"),
 
   #######################################
   # Teacher Effort		(EFFT)
